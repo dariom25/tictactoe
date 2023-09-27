@@ -47,19 +47,28 @@ const gameBoard = (() => {
 })();
 
 const gameController = (() => {
-    let round = 0;
+    let round = 1;
 
     const increaseRoundCounter = () => {
-        round++ //hier muss wahrscheinlich noch mehr hin
+        round++
     };
 
-    const playRound = (field, player) => { //hier muss gameBoard.board[field] als field eingegeben werden
+    const playRound = (field, player1, player2) => {
+        let player = checkWhichPlayersTurnItIs(player1, player2);
         gameBoard.setToken(field, player.token); //wenn ein belegtes feld angeklickt wird, wird playRound und der Counter trotzdem zu Ende ausgeführt!
         gameBoard.checkForWin(player.token);
         increaseRoundCounter();
     };
 
-    return {playRound}
+    const checkWhichPlayersTurnItIs = (player1, player2) => {
+        if (round % 2 === 0) {
+            return player2
+        } else if (round % 2 !== 0) {
+            return player1
+        }
+    }
+
+    return {playRound, round}
 })();
 
 const Player = (playerName, token) => {
