@@ -5,13 +5,17 @@ const gameBoard = (() => {
             board[field] = marker;
         }
     };
-    return {addMarker, board}
+    return {addMarker}
 })();
 
-const gameFlow = (() => {
+const gameController = (() => {
     let round = 0;
     const endRound = () => {
-        round++
+        round++ //hier muss wahrscheinlich noch mehr hin
     }
     return {endRound}
 })();
+
+const player = (playerName) => {
+    return {playerName}
+}
