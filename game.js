@@ -38,7 +38,12 @@ const gameController = (() => {
         round++ //hier muss wahrscheinlich noch mehr hin
     };
 
-    
+    const playRound = (field, token) => {
+        gameBoard.setToken(field, token);
+        gameBoard.checkForWin();
+        endRound();
+    };
+
     return {endRound, playRound}
 })();
 
