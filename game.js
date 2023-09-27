@@ -1,14 +1,10 @@
 const gameBoard = (() => {
     let board = [];
-    const setToken = (field, token) => {
-        if (board[field] === undefined) {
-            board[field] = token;
-        }
-    };
+
 
     const emptyBoard = () => {
         board = [];
-    }
+    };
 
     const checkForWin = (token) => {
         if (board[0] === token && board[3] === token && board[6] === token) {
@@ -46,11 +42,12 @@ const gameBoard = (() => {
 
 const gameController = (() => {
     let round = 0;
+
     const increaseRoundCounter = () => {
         round++ //hier muss wahrscheinlich noch mehr hin
     };
 
-    const playRound = (field, token) => {
+    const playRound = (field, token) => { //wenn ein belegtes feld angeklickt wird, wird playRound und der Counter trotzdem zu Ende ausgeführt!
         gameBoard.setToken(field, token);
         gameBoard.checkForWin(token);
         increaseRoundCounter();
@@ -59,6 +56,12 @@ const gameController = (() => {
     return {playRound}
 })();
 
-const player = (playerName) => {
-    return {playerName}
+const Player = (playerName) => {
+    const setToken = (field, token) => {
+        if (board[field] === undefined) {
+            board[field] = token;
+        }
+    };
+
+    return {playerName, setToken}
 }
