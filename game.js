@@ -6,6 +6,12 @@ const gameBoard = (() => {
         board = [];
     };
 
+    const setToken = (field, token) => {
+        if (gameBoard.board[field] === undefined) {
+            gameBoard.board[field] = token;
+        }
+    };
+
     const checkForWin = (token) => {
         if (board[0] === token && board[3] === token && board[6] === token) {
             alert("Win");
@@ -37,7 +43,7 @@ const gameBoard = (() => {
         }
     };
 
-    return {setToken, checkForWin, board}
+    return {checkForWin, setToken, board} //board müsste eigentlich jetzt wieder privat sein dürfen
 })();
 
 const gameController = (() => {
@@ -47,21 +53,18 @@ const gameController = (() => {
         round++ //hier muss wahrscheinlich noch mehr hin
     };
 
-    const playRound = (field, token) => { //wenn ein belegtes feld angeklickt wird, wird playRound und der Counter trotzdem zu Ende ausgeführt!
-        gameBoard.setToken(field, token);
-        gameBoard.checkForWin(token);
+    const playRound = (field, player) => { //hier muss gameBoard.board[field] als field eingegeben werden
+        gameBoard.setToken(field, player.token); //wenn ein belegtes feld angeklickt wird, wird playRound und der Counter trotzdem zu Ende ausgeführt!
+        gameBoard.checkForWin(player.token);
         increaseRoundCounter();
     };
 
     return {playRound}
 })();
 
-const Player = (playerName) => {
-    const setToken = (field, token) => {
-        if (board[field] === undefined) {
-            board[field] = token;
-        }
-    };
+const Player = (playerName, token) => {
+    
 
-    return {playerName, setToken}
+
+    return {playerName, token}
 }
