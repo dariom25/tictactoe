@@ -9,25 +9,31 @@ const gameBoard = (() => {
     const checkForWin = (token) => {
         if (board[0] === token && board[3] === token && board[6] === token) {
             alert("Win");
+            board = [];
         } else if (board[1] === token && board[4] === token && board[7] === token) {
             alert("Win");
+            board = [];
         } else if (board[2] === token && board[5] === token && board[8] === token) {
             alert("Win");
+            board = [];
         } else if (board[0] === token && board[1] === token && board[2] === token) {
             alert("Win");
+            board = [];
         } else if (board[3] === token && board[4] === token && board[5] === token) {
             alert("Win");
+            board = [];
         } else if (board[6] === token && board[7] === token && board[8] === token) {
             alert("Win");
+            board = [];
         } else if (board[0] === token && board[4] === token && board[8] === token) {
             alert("Win");
+            board = [];
         } else if (board[2] === token && board[4] === token && board[6] === token) {
             alert("Win");
-        }
-
-        switch("X") {
-            case board[0] === "X" && board[3] === "X" && board[6] === "X":
-                alert("Win")
+            board = [];
+        } else if (board.length === 8) {
+            alert("Tie");
+            board = [];
         }
     };
 
@@ -43,8 +49,7 @@ const gameController = (() => {
 
     const playRound = (field, token) => {
         gameBoard.setToken(field, token);
-        gameBoard.checkForWin(token[0]);
-        gameBoard.checkForWin(token[1]);
+        gameBoard.checkForWin(token);
         endRound();
     };
 
