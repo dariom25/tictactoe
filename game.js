@@ -6,25 +6,28 @@ const gameBoard = (() => {
         }
     };
 
-    const checkForWin = () => {
-        if (board[0] === board[3] && board[0] === board[6]) {
+    const checkForWin = (token) => {
+        if (board[0] === token && board[3] === token && board[6] === token) {
             alert("Win");
-        } else if (board[1] === board[4] && board[0] === board[7]) {
+        } else if (board[1] === token && board[4] === token && board[7] === token) {
             alert("Win");
-        } else if (board[1] === board[4] && board[1] === board[7]) {
+        } else if (board[2] === token && board[5] === token && board[8] === token) {
             alert("Win");
-        } else if (board[2] === board[5] && board[2] === board[8]) {
+        } else if (board[0] === token && board[1] === token && board[2] === token) {
             alert("Win");
-        } else if (board[0] === board[1] && board[0] === board[2]) {
+        } else if (board[3] === token && board[4] === token && board[5] === token) {
             alert("Win");
-        } else if (board[3] === board[4] && board[3] === board[5]) {
+        } else if (board[6] === token && board[7] === token && board[8] === token) {
             alert("Win");
-        } else if (board[6] === board[7] && board[6] === board[8]) {
+        } else if (board[0] === token && board[4] === token && board[8] === token) {
             alert("Win");
-        } else if (board[0] === board[4] && board[0] === board[8]) {
+        } else if (board[2] === token && board[4] === token && board[6] === token) {
             alert("Win");
-        } else if (board[2] === board[4] && board[2] === board[6]) {
-            alert("Win");
+        }
+
+        switch("X") {
+            case board[0] === "X" && board[3] === "X" && board[6] === "X":
+                alert("Win")
         }
     };
 
@@ -40,7 +43,8 @@ const gameController = (() => {
 
     const playRound = (field, token) => {
         gameBoard.setToken(field, token);
-        gameBoard.checkForWin();
+        gameBoard.checkForWin(token[0]);
+        gameBoard.checkForWin(token[1]);
         endRound();
     };
 
