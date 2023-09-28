@@ -4,13 +4,17 @@ body{
     grid-template-columns: 1fr 2fr 1fr;
 }
 
+.header{
+    color: white;
+}
+
 .board{
     background-color: white;
 
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     gap: 0.5vw;
-    grid-area: 1/2;
+    grid-area: 2/2;
 
     padding: 0.5vw;
     width: 500px;
