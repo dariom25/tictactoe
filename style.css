@@ -1,0 +1,27 @@
+body{
+    background-color: black;
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+}
+
+.board{
+    background-color: white;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0.5vw;
+    grid-area: 1/2;
+
+    padding: 0.5vw;
+    width: 500px;
+    height: 500px;
+
+    justify-self: center;
+}
+
+.field{
+    color: white;
+
+    background-color: black;
+
+}
