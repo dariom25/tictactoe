@@ -21,6 +21,19 @@ body{
     font-size: 3vw;
 }
 
+.game-mode{
+    display: flex;
+    justify-content: space-around;
+
+    gap: 20px;
+    font-size: 2vw;
+}
+
+.game-mode>div{
+    border: 1px solid white;
+    padding: 0.2vw;
+}
+
 .board{
     background-color: white;
 
