@@ -1,3 +1,8 @@
+:root{
+    font-family: "Martian Mono", sans-serif;
+
+}
+
 body{
     background-color: black;
     display: grid;
@@ -13,6 +18,7 @@ body{
 
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
     gap: 0.5vw;
     grid-area: 2/2;
 
@@ -25,7 +31,12 @@ body{
 
 .field{
     color: white;
-
     background-color: black;
 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 5vw;
+    height: 100%;
 }
