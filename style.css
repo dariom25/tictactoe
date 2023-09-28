@@ -7,10 +7,18 @@ body{
     background-color: black;
     display: grid;
     grid-template-columns: 1fr 2fr 1fr;
+    gap: 4vw;
 }
 
 .header{
     color: white;
+
+    grid-area: 1/1/2/4;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 3vw;
 }
 
 .board{
