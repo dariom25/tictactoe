@@ -76,10 +76,6 @@ const Player = (playerName, token) => {
 }
 
 const displayController = (() => {
-    
-    
-    const clearDisplay = () => {
-
-    };
+    const fields = document.querySelectorAll(".field")
     
 })(); 
