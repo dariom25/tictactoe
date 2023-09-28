@@ -72,8 +72,14 @@ const gameController = (() => {
 })();
 
 const Player = (playerName, token) => {
-    
-
-
     return {playerName, token}
 }
+
+const displayController = (() => {
+    
+    
+    const clearDisplay = () => {
+
+    };
+    
+})(); 
