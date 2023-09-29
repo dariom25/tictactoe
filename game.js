@@ -43,7 +43,7 @@ const gameBoard = (() => {
         }
     };
 
-    return {checkForWin, setToken, board} //board müsste eigentlich jetzt wieder privat sein dürfen
+    return {checkForWin, setToken, emptyBoard} //board müsste eigentlich jetzt wieder privat sein dürfen
 })();
 
 
@@ -67,6 +67,10 @@ const gameController = (() => {
         } else if (round % 2 === 0) {
             return player1
         }
+    };
+    
+    const setRoundCounterBack = () => {
+        round = 1;
     }
 
     return {playRound, checkWhichPlayersTurnItIs}
