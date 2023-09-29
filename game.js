@@ -2,44 +2,35 @@ const gameBoard = (() => {
     let board = [];
 
 
-    const emptyBoard = () => {
+    const emptyBoard = () => { //board wird nicht geleert
         board = [];
     };
 
     const setToken = (field, token) => { //if else counter -1 dann?
-        if (gameBoard.board[field] === undefined) {
-            gameBoard.board[field] = token;
+        if (board[field] === undefined) {
+            board[field] = token;
         }
     };
 
     const checkForWin = (token) => {
         if (board[0] === token && board[3] === token && board[6] === token) {
             alert("Win");
-            emptyBoard();
         } else if (board[1] === token && board[4] === token && board[7] === token) {
             alert("Win");
-            emptyBoard();
         } else if (board[2] === token && board[5] === token && board[8] === token) {
             alert("Win");
-            emptyBoard();
         } else if (board[0] === token && board[1] === token && board[2] === token) {
             alert("Win");
-            emptyBoard();
         } else if (board[3] === token && board[4] === token && board[5] === token) {
             alert("Win");
-            emptyBoard();
         } else if (board[6] === token && board[7] === token && board[8] === token) {
             alert("Win");
-            emptyBoard();
         } else if (board[0] === token && board[4] === token && board[8] === token) {
             alert("Win");
-            emptyBoard();
         } else if (board[2] === token && board[4] === token && board[6] === token) {
             alert("Win");
-            emptyBoard();
-        } else if (board.length === 8 && board.includes("undefined") !== true) { // ist korrekt, aber noch nicht schön. tie wird vor letztem zug gezeigt; Noch verbuggt!!!
-            alert("Tie");
-            emptyBoard();
+        } else if (board.length === 9 && board.includes("undefined") !== true) { 
+            alert("Tie"); 
         }
     };
 
@@ -51,29 +42,22 @@ const gameController = (() => {
     let round = 1;
 
     const increaseRoundCounter = () => {
-        round++
-    };
-
-    const playRound = (field, player1, player2) => {
-        let player = checkWhichPlayersTurnItIs(player1, player2);
-        gameBoard.setToken(field, player.token); //wenn ein belegtes feld angeklickt wird, wird playRound und der Counter trotzdem zu Ende ausgeführt! 
-        gameBoard.checkForWin(player.token);
-        increaseRoundCounter();
+        gameController.round++
     };
 
     const checkWhichPlayersTurnItIs = (player1, player2) => {
-        if (round % 2 !== 0) {
+        if (gameController.round % 2 === 0) {
             return player2
-        } else if (round % 2 === 0) {
+        } else if (gameController.round % 2 !== 0) {
             return player1
         }
     };
     
     const setRoundCounterBack = () => {
-        round = 1;
+        gameController.round = 1;
     }
 
-    return {playRound, checkWhichPlayersTurnItIs, setRoundCounterBack}
+    return {checkWhichPlayersTurnItIs, setRoundCounterBack, increaseRoundCounter, round}
 })();
 
 const Player = (name, token) => {
@@ -107,8 +91,7 @@ const displayController = (() => {
         });
     }
 
-    const displayToken = (field, player1, player2) => {
-        let player = gameController.checkWhichPlayersTurnItIs(player1, player2);
+    const displayToken = (field, player) => {
         field.textContent = player.token;
     };
 
@@ -125,7 +108,9 @@ const displayController = (() => {
         player2Name.setAttribute("class", "player-name");
         inputPlayer1Parent.appendChild(player1Name);
         inputPlayer2Parent.appendChild(player2Name);
-    }
+    };
+
+    restartBtn.addEventListener("click", restartGame);
 
     startBtn.addEventListener("click", (event) => {
         event.preventDefault();
@@ -137,8 +122,12 @@ const displayController = (() => {
     fields.forEach((field) => {
         field.addEventListener("click", () => {
             const fieldNumber = parseInt(field.getAttribute("id"));
-            gameController.playRound(fieldNumber, player1, player2);
-            displayToken(field, player1, player2); //X und O werden überschrieben wenn feld schon belegt ist; s.O.
+            let player = gameController.checkWhichPlayersTurnItIs(player1, player2);
+            gameBoard.setToken(fieldNumber, player.token); //wenn ein belegtes feld angeklickt wird, wird playRound und der Counter trotzdem zu Ende ausgeführt! 
+            displayToken(field, player); //X und O werden überschrieben wenn feld schon belegt ist; s.O.
+            gameBoard.checkForWin(player.token);
+            gameController.increaseRoundCounter();
+
         });
     })
 
