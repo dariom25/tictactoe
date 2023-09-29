@@ -43,7 +43,7 @@ const gameBoard = (() => {
         }
     };
 
-    return {checkForWin, setToken, emptyBoard} //board müsste eigentlich jetzt wieder privat sein dürfen
+    return {checkForWin, setToken, emptyBoard, board}
 })();
 
 
@@ -73,7 +73,7 @@ const gameController = (() => {
         round = 1;
     }
 
-    return {playRound, checkWhichPlayersTurnItIs}
+    return {playRound, checkWhichPlayersTurnItIs, setRoundCounterBack}
 })();
 
 const Player = (name, token) => {
@@ -84,6 +84,7 @@ const Player = (name, token) => {
 const displayController = (() => {
     const fields = document.querySelectorAll(".field");
     const startBtn = document.querySelector(".start-button");
+    const restartBtn = document.querySelector(".restart-button");
     const player1Input = document.getElementById("player1");
     const player2Input = document.getElementById("player2");
     const inputPlayer1Parent = document.querySelector("#player1-container");
@@ -94,6 +95,17 @@ const displayController = (() => {
     let player1;
     let player2;
 
+    const restartGame = () => {
+        gameBoard.emptyBoard();
+        gameController.setRoundCounterBack();
+        deleteTokens();
+    };
+
+    const deleteTokens = () => {
+        fields.forEach((field) => {
+            field.textContent = ""
+        });
+    }
 
     const displayToken = (field, player1, player2) => {
         let player = gameController.checkWhichPlayersTurnItIs(player1, player2);
