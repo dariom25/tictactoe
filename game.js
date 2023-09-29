@@ -84,6 +84,9 @@ const displayController = (() => {
     const player2Input = document.getElementById("player2");
     const inputPlayer1Parent = document.querySelector("#player1-container");
     const inputPlayer2Parent = document.querySelector("#player2-container");
+    const player1Name = document.createElement("div");
+    const player2Name = document.createElement("div");
+
     let player1;
     let player2;
 
@@ -100,13 +103,19 @@ const displayController = (() => {
 
     const displayPlayerName = (player1, player2) => {
         removeInputFields();
-
+        player1Name.textContent = player1.name + " (X)";
+        player2Name.textContent = player2.name + " (O)";
+        player1Name.setAttribute("class", "player-name");
+        player2Name.setAttribute("class", "player-name");
+        inputPlayer1Parent.appendChild(player1Name);
+        inputPlayer2Parent.appendChild(player2Name);
     }
 
     startBtn.addEventListener("click", (event) => {
         event.preventDefault();
         player1 = Player(player1Input.value, "X");
         player2 = Player(player2Input.value, "O");
+        displayPlayerName(player1, player2);
     });
 
     fields.forEach((field) => {
