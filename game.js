@@ -80,8 +80,8 @@ const Player = (name, token) => {
 const displayController = (() => {
     const fields = document.querySelectorAll(".field");
     const startBtn = document.querySelector(".start-button");
-    const player1Name = document.getElementById("player1");
-    const player2Name = document.getElementById("player2");
+    const player1Input = document.getElementById("player1");
+    const player2Input = document.getElementById("player2");
     const inputPlayer1Parent = document.querySelector("#player1-container");
     const inputPlayer2Parent = document.querySelector("#player2-container");
     let player1;
@@ -94,8 +94,8 @@ const displayController = (() => {
     };
 
     const removeInputFields = () => {
-        inputPlayer1Parent.removeChild(player1Name);
-        inputPlayer2Parent.removeChild(player2Name);
+        inputPlayer1Parent.removeChild(player1Input);
+        inputPlayer2Parent.removeChild(player2Input);
     }
 
     const displayPlayerName = (player1, player2) => {
@@ -105,8 +105,8 @@ const displayController = (() => {
 
     startBtn.addEventListener("click", (event) => {
         event.preventDefault();
-        player1 = Player(player1Name.value, "X");
-        player2 = Player(player2Name.value, "O");
+        player1 = Player(player1Input.value, "X");
+        player2 = Player(player2Input.value, "O");
     });
 
     fields.forEach((field) => {
@@ -117,6 +117,5 @@ const displayController = (() => {
         });
     })
 
-    return {player1, player1Name}
 })();
 
