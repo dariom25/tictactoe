@@ -46,6 +46,7 @@ const gameBoard = (() => {
     return {checkForWin, setToken, board} //board müsste eigentlich jetzt wieder privat sein dürfen
 })();
 
+
 const gameController = (() => {
     let round = 1;
 
@@ -75,32 +76,33 @@ const Player = (playerName, token) => {
     return {playerName, token}
 }
 
+
 const displayController = (() => {
-    const fields = document.querySelectorAll(".field")
-    const startBtn = document.querySelector(".start-button")
+    const fields = document.querySelectorAll(".field");
+    const startBtn = document.querySelector(".start-button");
+    const player1Name = document.getElementById("player1").value;
+    const player2Name = document.getElementById("player2").value;
+    let player1;
+    let player2;
+
 
     const displayToken = (field, player1, player2) => {
-        let player = gameController.checkWhichPlayersTurnItIs(player1, player2)
+        let player = gameController.checkWhichPlayersTurnItIs(player1, player2);
         field.textContent = player.token;
     }
 
     startBtn.addEventListener("click", (event) => {
-        event.preventDefault;
-        const namePlayer1 = document.querySelector("#player1").value;
-        const namePlayer2 = document.querySelector("#player2").value;
-        
-        let player1 = Player(namePlayer1, "X");
-        let player2 = Player(namePlayer2, "O");
+        event.preventDefault();
+        player1 = Player(player1Name, "X");
+        player2 = Player(player2Name, "O");
     });
 
     fields.forEach((field) => {
         field.addEventListener("click", () => {
             const fieldNumber = parseInt(field.getAttribute("id"));
-            gameController.playRound(fieldNumber, playerA, playerB);
-            displayToken(field, playerA, playerB); //X und O werden überschrieben wenn feld schon belegt ist; s.O.
+            gameController.playRound(fieldNumber, player1, player2);
+            displayToken(field, player1, player2); //X und O werden überschrieben wenn feld schon belegt ist; s.O.
         });
     })
-})(); 
+})();
 
-const playerA = Player("Leandra", "X");
-const playerB = Player("Dario", "O")
