@@ -2,14 +2,12 @@ const gameBoard = (() => {
     let board = [];
 
 
-    const emptyBoard = () => { //board wird nicht geleert
+    const emptyBoard = () => {
         board = [];
     };
 
     const setToken = (field, token) => { //if else counter -1 dann?
-        if (board[field] === undefined) {
             board[field] = token;
-        }
     };
 
     const checkForWin = (token) => {
@@ -29,7 +27,7 @@ const gameBoard = (() => {
             alert("Win");
         } else if (board[2] === token && board[4] === token && board[6] === token) {
             alert("Win");
-        } else if (board.length === 9 && board.includes("undefined") !== true) { 
+        } else if (board.length === 9 && board.includes(undefined) !== true) { 
             alert("Tie"); 
         }
     };
@@ -123,10 +121,13 @@ const displayController = (() => {
         field.addEventListener("click", () => {
             const fieldNumber = parseInt(field.getAttribute("id"));
             let player = gameController.checkWhichPlayersTurnItIs(player1, player2);
-            gameBoard.setToken(fieldNumber, player.token); //wenn ein belegtes feld angeklickt wird, wird playRound und der Counter trotzdem zu Ende ausgeführt! 
-            displayToken(field, player); //X und O werden überschrieben wenn feld schon belegt ist; s.O.
-            gameBoard.checkForWin(player.token);
-            gameController.increaseRoundCounter();
+            if (gameBoard.board[fieldNumber] === undefined) { //in der zweiten runde gibts probleme; kann nur felder auswählen, die in der ersten runde noch nicht belegt waren; ist der rest nicht undefined?
+                gameBoard.setToken(fieldNumber, player.token); //wenn ein belegtes feld angeklickt wird, wird playRound und der Counter trotzdem zu Ende ausgeführt! 
+                displayToken(field, player); //X und O werden überschrieben wenn feld schon belegt ist; s.O.
+                gameBoard.checkForWin(player.token);
+                gameController.increaseRoundCounter();
+            }
+
 
         });
     })
