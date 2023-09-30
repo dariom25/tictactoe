@@ -3,31 +3,31 @@ const gameBoard = (() => {
 
 
     const emptyBoard = () => {
-        board = [];
+        gameBoard.board = [];
     };
 
     const setToken = (field, token) => { //if else counter -1 dann?
-            board[field] = token;
+            gameBoard.board[field] = token;
     };
 
     const checkForWin = (token) => {
-        if (board[0] === token && board[3] === token && board[6] === token) {
+        if (gameBoard.board[0] === token && gameBoard.board[3] === token && gameBoard.board[6] === token) {
             alert("Win");
-        } else if (board[1] === token && board[4] === token && board[7] === token) {
+        } else if (gameBoard.board[1] === token && gameBoard.board[4] === token && gameBoard.board[7] === token) {
             alert("Win");
-        } else if (board[2] === token && board[5] === token && board[8] === token) {
+        } else if (gameBoard.board[2] === token && gameBoard.board[5] === token && gameBoard.board[8] === token) {
             alert("Win");
-        } else if (board[0] === token && board[1] === token && board[2] === token) {
+        } else if (gameBoard.board[0] === token && gameBoard.board[1] === token && gameBoard.board[2] === token) {
             alert("Win");
-        } else if (board[3] === token && board[4] === token && board[5] === token) {
+        } else if (gameBoard.board[3] === token && gameBoard.board[4] === token && gameBoard.board[5] === token) {
             alert("Win");
-        } else if (board[6] === token && board[7] === token && board[8] === token) {
+        } else if (gameBoard.board[6] === token && gameBoard.board[7] === token && gameBoard.board[8] === token) {
             alert("Win");
-        } else if (board[0] === token && board[4] === token && board[8] === token) {
+        } else if (gameBoard.board[0] === token && gameBoard.board[4] === token && gameBoard.board[8] === token) {
             alert("Win");
-        } else if (board[2] === token && board[4] === token && board[6] === token) {
+        } else if (gameBoard.board[2] === token && gameBoard.board[4] === token && gameBoard.board[6] === token) {
             alert("Win");
-        } else if (board.length === 9 && board.includes(undefined) !== true) { 
+        } else if (gameBoard.board.length === 9 && gameBoard.board.includes(undefined) !== true) { 
             alert("Tie"); 
         }
     };
@@ -121,9 +121,9 @@ const displayController = (() => {
         field.addEventListener("click", () => {
             const fieldNumber = parseInt(field.getAttribute("id"));
             let player = gameController.checkWhichPlayersTurnItIs(player1, player2);
-            if (gameBoard.board[fieldNumber] === undefined) { //in der zweiten runde gibts probleme; kann nur felder auswählen, die in der ersten runde noch nicht belegt waren; ist der rest nicht undefined?
-                gameBoard.setToken(fieldNumber, player.token); //wenn ein belegtes feld angeklickt wird, wird playRound und der Counter trotzdem zu Ende ausgeführt! 
-                displayToken(field, player); //X und O werden überschrieben wenn feld schon belegt ist; s.O.
+            if (gameBoard.board[fieldNumber] === undefined) { 
+                gameBoard.setToken(fieldNumber, player.token); 
+                displayToken(field, player);
                 gameBoard.checkForWin(player.token);
                 gameController.increaseRoundCounter();
             }
