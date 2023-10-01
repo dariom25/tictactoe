@@ -145,7 +145,7 @@ const displayController = (() => {
                 gameBoard.checkForWin("O") !== "tie") {
                 gameBoard.setToken(fieldNumber, player.token); 
                 displayToken(field, player);
-                if (gameBoard.checkForWin(player.token)) { //hier muss ich noch gucken, was ich mit einem tie mache
+                if (gameBoard.checkForWin(player.token)) { 
                     displayEndOfGameMessage(player)
                 };
                 gameController.increaseRoundCounter();
