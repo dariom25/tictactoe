@@ -93,6 +93,14 @@ const displayController = (() => {
         field.textContent = player.token;
     };
 
+    const displayWinningMessage = (player) => {
+        const winningMessage = document.createElement("div");
+        const parentOfWinningMessage = document.querySelector("body");
+        winningMessage.setAttribute("class", "winning-message");
+        winningMessage.textContent = `Congratulations! ${player.name} wins the game!`;
+        parentOfWinningMessage.appendChild(winningMessage);
+    };
+
     const removeInputFields = () => {
         inputPlayer1Parent.removeChild(player1Input);
         inputPlayer2Parent.removeChild(player2Input);
@@ -121,10 +129,12 @@ const displayController = (() => {
         field.addEventListener("click", () => {
             const fieldNumber = parseInt(field.getAttribute("id"));
             let player = gameController.checkWhichPlayersTurnItIs(player1, player2);
-            if (gameBoard.board[fieldNumber] === undefined) { 
+            if (gameBoard.board[fieldNumber] === undefined && gameController.checkForWin !== true) { 
                 gameBoard.setToken(fieldNumber, player.token); 
                 displayToken(field, player);
-                gameBoard.checkForWin(player.token);
+                if (gameBoard.checkForWin(player.token)) {
+                    displayWinningMessage(player)
+                };
                 gameController.increaseRoundCounter();
             }
 
