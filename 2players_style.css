@@ -29,8 +29,16 @@ body{
     font-size: 2vw;
 }
 
-.game-mode>a, .game-mode>div{
+.game-mode>a {
     border: 1px solid white;
+    padding: 0.2vw;
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.game-mode>div{
+    border: 5px solid white;
     padding: 0.2vw;
 }
 
