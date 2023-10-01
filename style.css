@@ -116,3 +116,8 @@ form>div>label, .player-name{
     background-color: black;
     color: white;
 }
+
+.winning-message{
+    color: white;
+    font-size: 2vw;
+}
