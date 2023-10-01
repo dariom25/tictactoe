@@ -67,12 +67,8 @@ const displayController = (() => {
     const fields = document.querySelectorAll(".field");
     const startBtn = document.querySelector(".start-button");
     const restartBtn = document.querySelector(".restart-button");
-    const player1Input = document.getElementById("player1");
-    const player2Input = document.getElementById("player2");
     const inputPlayer1Parent = document.querySelector("#player1-container");
     const inputPlayer2Parent = document.querySelector("#player2-container");
-    const player1Name = document.createElement("div");
-    const player2Name = document.createElement("div");
     const winningMessage = document.createElement("div");
     const body = document.querySelector("body");
 
@@ -129,8 +125,8 @@ const displayController = (() => {
 
     startBtn.addEventListener("click", (event) => {
         event.preventDefault();
-        player1 = Player(player1Input.value, "X");
-        player2 = Player(player2Input.value, "O");
+        player1 = Player("You", "X");
+        player2 = Player("AI", "O");
         displayPlayerName(player1, player2);
     });
 
