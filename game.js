@@ -29,8 +29,6 @@ const gameBoard = (() => {
             return true;
         } else if (gameBoard.board.length === 9 && gameBoard.board.includes(undefined) !== true) { 
             return false;
-        } else {
-            return false;
         }
     };
 
@@ -136,7 +134,7 @@ const displayController = (() => {
         field.addEventListener("click", () => {
             const fieldNumber = parseInt(field.getAttribute("id"));
             let player = gameController.checkWhichPlayersTurnItIs(player1, player2);
-            if (gameBoard.board[fieldNumber] === undefined && gameBoard.checkForWin(player.token) === false) { //hier kann ich nach dem sieg noch ein token setzen. warum?
+            if (gameBoard.board[fieldNumber] === undefined && gameBoard.checkForWin("X") !== true && gameBoard.checkForWin("O") !== true) {
                 gameBoard.setToken(fieldNumber, player.token); 
                 displayToken(field, player);
                 if (gameBoard.checkForWin(player.token)) { //hier muss ich noch gucken, was ich mit einem tie mache
