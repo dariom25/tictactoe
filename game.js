@@ -85,6 +85,7 @@ const displayController = (() => {
         gameBoard.emptyBoard();
         gameController.setRoundCounterBack();
         deleteTokens();
+        removeWinningMessage();
     };
 
     const deleteTokens = () => {
@@ -102,6 +103,10 @@ const displayController = (() => {
         winningMessage.textContent = `Congratulations! ${player.name} wins the game!`;
         body.appendChild(winningMessage);
     };
+
+    const removeWinningMessage = () => {
+        body.removeChild(winningMessage);
+    }
 
     const removeInputFields = () => {
         inputPlayer1Parent.removeChild(player1Input);
