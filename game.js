@@ -29,6 +29,8 @@ const gameBoard = (() => {
             return true;
         } else if (gameBoard.board.length === 9 && gameBoard.board.includes(undefined) !== true) { 
             return false;
+        } else {
+            return false;
         }
     };
 
@@ -73,6 +75,8 @@ const displayController = (() => {
     const inputPlayer2Parent = document.querySelector("#player2-container");
     const player1Name = document.createElement("div");
     const player2Name = document.createElement("div");
+    const winningMessage = document.createElement("div");
+    const body = document.querySelector("body");
 
     let player1;
     let player2;
@@ -94,11 +98,9 @@ const displayController = (() => {
     };
 
     const displayWinningMessage = (player) => {
-        const winningMessage = document.createElement("div");
-        const parentOfWinningMessage = document.querySelector("body");
         winningMessage.setAttribute("class", "winning-message");
         winningMessage.textContent = `Congratulations! ${player.name} wins the game!`;
-        parentOfWinningMessage.appendChild(winningMessage);
+        body.appendChild(winningMessage);
     };
 
     const removeInputFields = () => {
@@ -129,10 +131,10 @@ const displayController = (() => {
         field.addEventListener("click", () => {
             const fieldNumber = parseInt(field.getAttribute("id"));
             let player = gameController.checkWhichPlayersTurnItIs(player1, player2);
-            if (gameBoard.board[fieldNumber] === undefined && gameController.checkForWin !== true) { 
+            if (gameBoard.board[fieldNumber] === undefined && gameBoard.checkForWin(player.token) === false) { //hier kann ich nach dem sieg noch ein token setzen. warum?
                 gameBoard.setToken(fieldNumber, player.token); 
                 displayToken(field, player);
-                if (gameBoard.checkForWin(player.token)) {
+                if (gameBoard.checkForWin(player.token)) { //hier muss ich noch gucken, was ich mit einem tie mache
                     displayWinningMessage(player)
                 };
                 gameController.increaseRoundCounter();
