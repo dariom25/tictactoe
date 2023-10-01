@@ -12,23 +12,23 @@ const gameBoard = (() => {
 
     const checkForWin = (token) => {
         if (gameBoard.board[0] === token && gameBoard.board[3] === token && gameBoard.board[6] === token) {
-            return true;
+            return "win";
         } else if (gameBoard.board[1] === token && gameBoard.board[4] === token && gameBoard.board[7] === token) {
-            return true;
+            return "win";
         } else if (gameBoard.board[2] === token && gameBoard.board[5] === token && gameBoard.board[8] === token) {
-            return true;
+            return "win";
         } else if (gameBoard.board[0] === token && gameBoard.board[1] === token && gameBoard.board[2] === token) {
-            return true;
+            return "win";
         } else if (gameBoard.board[3] === token && gameBoard.board[4] === token && gameBoard.board[5] === token) {
-            return true;
+            return "win";
         } else if (gameBoard.board[6] === token && gameBoard.board[7] === token && gameBoard.board[8] === token) {
-            return true;
+            return "win";
         } else if (gameBoard.board[0] === token && gameBoard.board[4] === token && gameBoard.board[8] === token) {
-            return true;
+            return "win";
         } else if (gameBoard.board[2] === token && gameBoard.board[4] === token && gameBoard.board[6] === token) {
-            return true;
+            return "win";
         } else if (gameBoard.board.length === 9 && gameBoard.board.includes(undefined) !== true) { 
-            return false;
+            return "tie";
         }
     };
 
@@ -96,9 +96,13 @@ const displayController = (() => {
         field.textContent = player.token;
     };
 
-    const displayWinningMessage = (player) => {
+    const displayEndOfGameMessage = (player) => {
         winningMessage.setAttribute("class", "winning-message");
-        winningMessage.textContent = `Congratulations! ${player.name} wins the game!`;
+        if (gameBoard.checkForWin(player.token) === "win") {
+            winningMessage.textContent = `Congratulations! ${player.name} wins the game!`;
+        } else if (gameBoard.checkForWin(player.token) === "tie") {
+            winningMessage.textContent = "Tie!";
+        }
         body.appendChild(winningMessage);
     };
 
@@ -134,11 +138,15 @@ const displayController = (() => {
         field.addEventListener("click", () => {
             const fieldNumber = parseInt(field.getAttribute("id"));
             let player = gameController.checkWhichPlayersTurnItIs(player1, player2);
-            if (gameBoard.board[fieldNumber] === undefined && gameBoard.checkForWin("X") !== true && gameBoard.checkForWin("O") !== true) {
+            if (gameBoard.board[fieldNumber] === undefined && 
+                gameBoard.checkForWin("X") !== "win" && 
+                gameBoard.checkForWin("O") !== "win" &&
+                gameBoard.checkForWin("X") !== "tie" && 
+                gameBoard.checkForWin("O") !== "tie") {
                 gameBoard.setToken(fieldNumber, player.token); 
                 displayToken(field, player);
                 if (gameBoard.checkForWin(player.token)) { //hier muss ich noch gucken, was ich mit einem tie mache
-                    displayWinningMessage(player)
+                    displayEndOfGameMessage(player)
                 };
                 gameController.increaseRoundCounter();
             }
