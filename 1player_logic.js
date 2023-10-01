@@ -32,7 +32,12 @@ const gameBoard = (() => {
         }
     };
 
-    return {checkForWin, setToken, emptyBoard, board}
+    const generateRandomField = () => {
+        let field = Math.floor(Math.random() * 9) + 1;
+        return field
+    };
+
+    return {checkForWin, setToken, emptyBoard, generateRandomField, board}
 })();
 
 
@@ -106,45 +111,44 @@ const displayController = (() => {
         body.removeChild(winningMessage);
     }
 
-    const removeInputFields = () => {
-        inputPlayer1Parent.removeChild(player1Input);
-        inputPlayer2Parent.removeChild(player2Input);
-    }
-
-    const displayPlayerName = (player1, player2) => {
-        removeInputFields();
-        player1Name.textContent = player1.name + " (X)";
-        player2Name.textContent = player2.name + " (O)";
-        player1Name.setAttribute("class", "player-name");
-        player2Name.setAttribute("class", "player-name");
-        inputPlayer1Parent.appendChild(player1Name);
-        inputPlayer2Parent.appendChild(player2Name);
-    };
-
     restartBtn.addEventListener("click", restartGame);
 
     startBtn.addEventListener("click", (event) => {
         event.preventDefault();
         player1 = Player("You", "X");
         player2 = Player("AI", "O");
-        displayPlayerName(player1, player2);
     });
 
     fields.forEach((field) => {
-        field.addEventListener("click", () => {
+        field.addEventListener("click", () => { //ist noch an einen eventlistener gebunden und AI zieht nur, wenn geklickt wird
             const fieldNumber = parseInt(field.getAttribute("id"));
-            let player = gameController.checkWhichPlayersTurnItIs(player1, player2);
-            if (gameBoard.board[fieldNumber] === undefined && 
-                gameBoard.checkForWin("X") !== "win" && 
-                gameBoard.checkForWin("O") !== "win" &&
-                gameBoard.checkForWin("X") !== "tie" && 
-                gameBoard.checkForWin("O") !== "tie") {
-                gameBoard.setToken(fieldNumber, player.token); 
-                displayToken(field, player);
-                if (gameBoard.checkForWin(player.token)) { 
-                    displayEndOfGameMessage(player)
-                };
-                gameController.increaseRoundCounter();
+            let player = gameController.checkWhichPlayersTurnItIs(player1, player2); 
+            if (player === player1) {
+                if (gameBoard.board[fieldNumber] === undefined && 
+                    gameBoard.checkForWin("X") !== "win" && 
+                    gameBoard.checkForWin("O") !== "win" &&
+                    gameBoard.checkForWin("X") !== "tie" && 
+                    gameBoard.checkForWin("O") !== "tie") {
+                    gameBoard.setToken(fieldNumber, player.token); 
+                    displayToken(field, player);
+                    if (gameBoard.checkForWin(player.token)) { 
+                        displayEndOfGameMessage(player)
+                    };
+                    gameController.increaseRoundCounter();
+                }   
+            } else if (player === player2) {
+                if (gameBoard.board[fieldNumber] === undefined &&  //hier muss ich mir nochmal was mit der fieldnumber überlegen
+                    gameBoard.checkForWin("X") !== "win" && 
+                    gameBoard.checkForWin("O") !== "win" &&
+                    gameBoard.checkForWin("X") !== "tie" && 
+                    gameBoard.checkForWin("O") !== "tie") {
+                    gameBoard.setToken(gameBoard.generateRandomField(), player.token); 
+                    displayToken(field, player); //der displayed das noch in dem geklickten feld
+                    if (gameBoard.checkForWin(player.token)) { 
+                        displayEndOfGameMessage(player)
+                    };
+                    gameController.increaseRoundCounter();
+                }   
             }
 
 
