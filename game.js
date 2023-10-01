@@ -6,29 +6,29 @@ const gameBoard = (() => {
         gameBoard.board = [];
     };
 
-    const setToken = (field, token) => { //if else counter -1 dann?
+    const setToken = (field, token) => {
             gameBoard.board[field] = token;
     };
 
     const checkForWin = (token) => {
         if (gameBoard.board[0] === token && gameBoard.board[3] === token && gameBoard.board[6] === token) {
-            alert("Win");
+            return true;
         } else if (gameBoard.board[1] === token && gameBoard.board[4] === token && gameBoard.board[7] === token) {
-            alert("Win");
+            return true;
         } else if (gameBoard.board[2] === token && gameBoard.board[5] === token && gameBoard.board[8] === token) {
-            alert("Win");
+            return true;
         } else if (gameBoard.board[0] === token && gameBoard.board[1] === token && gameBoard.board[2] === token) {
-            alert("Win");
+            return true;
         } else if (gameBoard.board[3] === token && gameBoard.board[4] === token && gameBoard.board[5] === token) {
-            alert("Win");
+            return true;
         } else if (gameBoard.board[6] === token && gameBoard.board[7] === token && gameBoard.board[8] === token) {
-            alert("Win");
+            return true;
         } else if (gameBoard.board[0] === token && gameBoard.board[4] === token && gameBoard.board[8] === token) {
-            alert("Win");
+            return true;
         } else if (gameBoard.board[2] === token && gameBoard.board[4] === token && gameBoard.board[6] === token) {
-            alert("Win");
+            return true;
         } else if (gameBoard.board.length === 9 && gameBoard.board.includes(undefined) !== true) { 
-            alert("Tie"); 
+            return false;
         }
     };
 
