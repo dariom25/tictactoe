@@ -29,7 +29,7 @@ body{
     font-size: 2vw;
 }
 
-.game-mode>div{
+.game-mode>a, .game-mode>div{
     border: 1px solid white;
     padding: 0.2vw;
 }
