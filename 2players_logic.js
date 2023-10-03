@@ -60,7 +60,7 @@ const gameController = (() => {
         gameController.round = 1;
     }
 
-    return {checkWhichPlayersTurnItIs, setRoundCounterBack, increaseRoundCounter, round}
+    return {checkWhichPlayersTurnItIs, setRoundCounterBack, increaseRoundCounter, randomizeStartingPlayer, round}
 })();
 
 const Player = (name, token) => {
@@ -68,7 +68,7 @@ const Player = (name, token) => {
 }
 
 
-const displayController = (() => {
+const displayController = (() => { // spieler der dran ist muss noch markiert werden
     const fields = document.querySelectorAll(".field");
     const startBtn = document.querySelector(".start-button");
     const restartBtn = document.querySelector(".restart-button");
@@ -88,6 +88,7 @@ const displayController = (() => {
         gameBoard.emptyBoard();
         gameController.setRoundCounterBack();
         deleteTokens();
+        gameController.randomizeStartingPlayer();
         removeWinningMessage();
     };
 
@@ -137,6 +138,7 @@ const displayController = (() => {
         player1 = Player(player1Input.value, "X");
         player2 = Player(player2Input.value, "O");
         displayPlayerName(player1, player2);
+        gameController.randomizeStartingPlayer();
     });
 
     fields.forEach((field) => {
