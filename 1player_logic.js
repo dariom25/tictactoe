@@ -33,8 +33,16 @@ const gameBoard = (() => {
     };
 
     const generateRandomField = () => {
-        let field = Math.floor(Math.random() * 9) + 1;
-        return field
+        let field = Math.floor(Math.random() * 8) + 1;
+        if (gameBoard.board[field] === undefined &&
+            gameBoard.checkForWin("X") !== "win" && 
+            gameBoard.checkForWin("O") !== "win" &&
+            gameBoard.checkForWin("X") !== "tie" && 
+            gameBoard.checkForWin("O") !== "tie") {
+                return field
+            } else {
+                generateRandomField();
+            }
     };
 
     return {checkForWin, setToken, emptyBoard, generateRandomField, board}
@@ -119,11 +127,12 @@ const displayController = (() => {
         player2 = Player("AI", "O");
     });
 
+    // eventlistener in ne function packen, die chekct, wer dran ist und dann nur auf klick das spieler kreuz setzen, sonst computerMove()
+    
     fields.forEach((field) => {
-        field.addEventListener("click", () => { //ist noch an einen eventlistener gebunden und AI zieht nur, wenn geklickt wird
-            const fieldNumber = parseInt(field.getAttribute("id"));
+        field.addEventListener("click", () => {
             let player = gameController.checkWhichPlayersTurnItIs(player1, player2); 
-            if (player === player1) {
+            const fieldNumber = parseInt(field.getAttribute("id"));
                 if (gameBoard.board[fieldNumber] === undefined && 
                     gameBoard.checkForWin("X") !== "win" && 
                     gameBoard.checkForWin("O") !== "win" &&
@@ -135,25 +144,11 @@ const displayController = (() => {
                         displayEndOfGameMessage(player)
                     };
                     gameController.increaseRoundCounter();
-                }   
-            } else if (player === player2) {
-                if (gameBoard.board[fieldNumber] === undefined &&  //hier muss ich mir nochmal was mit der fieldnumber überlegen
-                    gameBoard.checkForWin("X") !== "win" && 
-                    gameBoard.checkForWin("O") !== "win" &&
-                    gameBoard.checkForWin("X") !== "tie" && 
-                    gameBoard.checkForWin("O") !== "tie") {
-                    gameBoard.setToken(gameBoard.generateRandomField(), player.token); 
-                    displayToken(field, player); //der displayed das noch in dem geklickten feld
-                    if (gameBoard.checkForWin(player.token)) { 
-                        displayEndOfGameMessage(player)
-                    };
-                    gameController.increaseRoundCounter();
-                }   
             }
-
-
         });
     })
 
-})();
+            
+    
 
+})();
