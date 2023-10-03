@@ -74,8 +74,8 @@ const displayController = (() => { // spieler der dran ist muss noch markiert we
     const restartBtn = document.querySelector(".restart-button");
     const player1Input = document.getElementById("player1");
     const player2Input = document.getElementById("player2");
-    const player1Label = document.querySelector(".player1-container>label");
-    const player2Label = document.querySelector(".player2-container>label");
+    const player1Label = document.querySelector("#player1-label");
+    const player2Label = document.querySelector("#player2-label");
     const inputPlayer1Parent = document.querySelector("#player1-container");
     const inputPlayer2Parent = document.querySelector("#player2-container");
     const player1Name = document.createElement("div");
@@ -87,11 +87,20 @@ const displayController = (() => { // spieler der dran ist muss noch markiert we
     let player2;
 
     const restartGame = () => {
+
         gameBoard.emptyBoard();
         gameController.setRoundCounterBack();
         deleteTokens();
         gameController.randomizeStartingPlayer();
-        removeWinningMessage();
+
+        const player = gameController.checkWhichPlayersTurnItIs(player1, player2);
+        
+        showFirstTurnIndication(player); // hier gibts noch probleme mit den turn indications wenn restarted wird
+
+
+        removeWinningMessage(); //wenn keine winning message da ist die func verbugged
+        
+
     };
 
     const deleteTokens = () => {
@@ -102,17 +111,26 @@ const displayController = (() => { // spieler der dran ist muss noch markiert we
 
     const showTurnIndication = (player) => {
         if (player === player1) {
+            player2Label.setAttribute("class", "active-player");
+        } else if (player === player2) {
+            player1Label.setAttribute("class", "active-player");
+        }
+    }
+
+    const showFirstTurnIndication = (player) => {
+        if (player === player1) {
             player1Label.setAttribute("class", "active-player");
         } else if (player === player2) {
             player2Label.setAttribute("class", "active-player");
         }
     }
 
+
     const removeTurnIndication = (player) => {
         if (player === player1) {
-            player2Label.removeAttribute("class");
-        } else if (player === player2) {
             player1Label.removeAttribute("class");
+        } else if (player === player2) {
+            player2Label.removeAttribute("class");
         }
     }
 
@@ -156,13 +174,18 @@ const displayController = (() => { // spieler der dran ist muss noch markiert we
         player1 = Player(player1Input.value, "X");
         player2 = Player(player2Input.value, "O");
         displayPlayerName(player1, player2);
+
         gameController.randomizeStartingPlayer();
+        let player = gameController.checkWhichPlayersTurnItIs(player1, player2);
+        showFirstTurnIndication(player);
     });
 
     fields.forEach((field) => {
         field.addEventListener("click", () => {
             const fieldNumber = parseInt(field.getAttribute("id"));
             let player = gameController.checkWhichPlayersTurnItIs(player1, player2);
+            showTurnIndication(player);
+            removeTurnIndication(player);
             if (gameBoard.board[fieldNumber] === undefined && 
                 gameBoard.checkForWin("X") !== "win" && 
                 gameBoard.checkForWin("O") !== "win" &&
