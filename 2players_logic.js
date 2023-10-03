@@ -43,6 +43,11 @@ const gameController = (() => {
         gameController.round++
     };
 
+    const randomizeStartingPlayer = () => {
+        const randomRound = Math.floor(Math.random() *2);
+        gameController.round += randomRound 
+    }
+
     const checkWhichPlayersTurnItIs = (player1, player2) => {
         if (gameController.round % 2 === 0) {
             return player2
