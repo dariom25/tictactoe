@@ -74,6 +74,8 @@ const displayController = (() => { // spieler der dran ist muss noch markiert we
     const restartBtn = document.querySelector(".restart-button");
     const player1Input = document.getElementById("player1");
     const player2Input = document.getElementById("player2");
+    const player1Label = document.querySelector(".player1-container>label");
+    const player2Label = document.querySelector(".player2-container>label");
     const inputPlayer1Parent = document.querySelector("#player1-container");
     const inputPlayer2Parent = document.querySelector("#player2-container");
     const player1Name = document.createElement("div");
@@ -96,6 +98,22 @@ const displayController = (() => { // spieler der dran ist muss noch markiert we
         fields.forEach((field) => {
             field.textContent = ""
         });
+    }
+
+    const showTurnIndication = (player) => {
+        if (player === player1) {
+            player1Label.setAttribute("class", "active-player");
+        } else if (player === player2) {
+            player2Label.setAttribute("class", "active-player");
+        }
+    }
+
+    const removeTurnIndication = (player) => {
+        if (player === player1) {
+            player2Label.removeAttribute("class");
+        } else if (player === player2) {
+            player1Label.removeAttribute("class");
+        }
     }
 
     const displayToken = (field, player) => {
