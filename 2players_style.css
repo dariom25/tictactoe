@@ -129,3 +129,7 @@ form>div>label, .player-name{
     color: white;
     font-size: 2vw;
 }
+
+.active-player{
+    text-decoration: underline;
+}
