@@ -33,16 +33,13 @@ const gameBoard = (() => {
     };
 
     const generateRandomField = () => {
-        let field = Math.floor(Math.random() * 8) + 1;
-        if (gameBoard.board[field] === undefined &&
-            gameBoard.checkForWin("X") !== "win" && // hier muss ich vielleicht nochmal die bedingungen überprüfen, wie das mit win ausieht
-            gameBoard.checkForWin("O") !== "win" &&
-            gameBoard.checkForWin("X") !== "tie" && 
-            gameBoard.checkForWin("O") !== "tie") {
-                return field
-            } else {
-                generateRandomField();
-            }
+        while (true) {
+            const field = Math.floor(Math.random() * 9);
+            if (gameBoard.board[field] === undefined) {
+                    return field
+                };
+        }
+
     };
 
     return {checkForWin, setToken, emptyBoard, generateRandomField, board}
