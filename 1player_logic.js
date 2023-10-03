@@ -35,7 +35,7 @@ const gameBoard = (() => {
     const generateRandomField = () => {
         let field = Math.floor(Math.random() * 8) + 1;
         if (gameBoard.board[field] === undefined &&
-            gameBoard.checkForWin("X") !== "win" && 
+            gameBoard.checkForWin("X") !== "win" && // hier muss ich vielleicht nochmal die bedingungen überprüfen, wie das mit win ausieht
             gameBoard.checkForWin("O") !== "win" &&
             gameBoard.checkForWin("X") !== "tie" && 
             gameBoard.checkForWin("O") !== "tie") {
@@ -80,8 +80,6 @@ const displayController = (() => {
     const fields = document.querySelectorAll(".field");
     const startBtn = document.querySelector(".start-button");
     const restartBtn = document.querySelector(".restart-button");
-    const inputPlayer1Parent = document.querySelector("#player1-container");
-    const inputPlayer2Parent = document.querySelector("#player2-container");
     const winningMessage = document.createElement("div");
     const body = document.querySelector("body");
 
@@ -117,7 +115,14 @@ const displayController = (() => {
 
     const removeWinningMessage = () => {
         body.removeChild(winningMessage);
-    }
+    };
+
+    const computerMove = (player) => {
+        const fieldNumber = gameBoard.generateRandomField();
+        const field = document.getElementById(fieldNumber.toString())
+        gameBoard.setToken(fieldNumber, player.token);
+        displayToken(field, player);
+    };
 
     restartBtn.addEventListener("click", restartGame);
 
@@ -125,6 +130,7 @@ const displayController = (() => {
         event.preventDefault();
         player1 = Player("You", "X");
         player2 = Player("AI", "O");
+        computerMove(player1);
     });
 
     // eventlistener in ne function packen, die chekct, wer dran ist und dann nur auf klick das spieler kreuz setzen, sonst computerMove()
