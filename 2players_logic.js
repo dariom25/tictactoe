@@ -87,6 +87,8 @@ const displayController = (() => { // spieler der dran ist muss noch markiert we
     let player2;
 
     const restartGame = () => {
+        const lastPlayer = gameController.checkWhichPlayersTurnItIs(player1, player2);
+        removeTurnIndication(lastPlayer);
 
         gameBoard.emptyBoard();
         gameController.setRoundCounterBack();
