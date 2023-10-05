@@ -97,7 +97,7 @@ const displayController = (() => { // spieler der dran ist muss noch markiert we
 
         const player = gameController.checkWhichPlayersTurnItIs(player1, player2);
         
-        showFirstTurnIndication(player); // hier gibts noch probleme mit den turn indications wenn restarted wird
+        showFirstTurnIndication(player); 
 
 
         removeWinningMessage(); //wenn keine winning message da ist die func verbugged
