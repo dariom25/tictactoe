@@ -27,7 +27,7 @@ const gameBoard = (() => {
             return "win";
         } else if (gameBoard.board[2] === token && gameBoard.board[4] === token && gameBoard.board[6] === token) {
             return "win";
-        } else if (gameBoard.board.length === 9 && gameBoard.board.includes(undefined) !== true) { 
+        } else if (gameBoard.board.length === 9 && gameBoard.board.includes(undefined) !== true) { //wenn ganz zu Ende des Spiels ein Token gesetzt wird, dass den Sieg bringen würde, wird es als tie gewertet
             return "tie";
         }
     };
@@ -92,6 +92,13 @@ const displayController = (() => {
         gameBoard.emptyBoard();
         gameController.setRoundCounterBack();
         deleteTokens();
+
+        gameController.randomizeStartingPlayer();
+        const player = gameController.checkWhichPlayersTurnItIs(player1, player2);
+        if (player === player2) {
+            computerMove(player2);
+        }
+
         removeWinningMessage();
     };
 
@@ -132,27 +139,44 @@ const displayController = (() => {
         event.preventDefault();
         player1 = Player("You", "X");
         player2 = Player("AI", "O");
-        computerMove(player1);
+        
+        gameController.randomizeStartingPlayer();
+        const player = gameController.checkWhichPlayersTurnItIs(player1, player2);
+        if (player === player2) {
+            computerMove(player2);
+        }
     });
 
     // eventlistener in ne function packen, die chekct, wer dran ist und dann nur auf klick das spieler kreuz setzen, sonst computerMove()
     
     fields.forEach((field) => {
         field.addEventListener("click", () => {
-            let player = gameController.checkWhichPlayersTurnItIs(player1, player2); 
+            //player turn
             const fieldNumber = parseInt(field.getAttribute("id"));
                 if (gameBoard.board[fieldNumber] === undefined && 
                     gameBoard.checkForWin("X") !== "win" && 
                     gameBoard.checkForWin("O") !== "win" &&
                     gameBoard.checkForWin("X") !== "tie" && 
                     gameBoard.checkForWin("O") !== "tie") {
-                    gameBoard.setToken(fieldNumber, player.token); 
-                    displayToken(field, player);
-                    if (gameBoard.checkForWin(player.token)) { 
-                        displayEndOfGameMessage(player)
-                    };
-                    gameController.increaseRoundCounter();
-            }
+                    gameBoard.setToken(fieldNumber, player1.token); 
+                    displayToken(field, player1);
+                };
+                if (gameBoard.checkForWin(player1.token)) { 
+                    displayEndOfGameMessage(player1);
+                }
+                gameController.increaseRoundCounter();
+
+                //computer turn
+                if (gameBoard.checkForWin("X") !== "win" && 
+                    gameBoard.checkForWin("O") !== "win" &&
+                    gameBoard.checkForWin("X") !== "tie" && 
+                    gameBoard.checkForWin("O") !== "tie") {
+                        computerMove(player2);
+                }
+                if (gameBoard.checkForWin(player2.token)) {
+                    displayEndOfGameMessage(player2);
+                }
+                gameController.increaseRoundCounter();            
         });
     })
 
