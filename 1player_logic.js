@@ -146,41 +146,35 @@ const displayController = (() => {
             computerMove(player2);
         }
     });
-
-    // eventlistener in ne function packen, die chekct, wer dran ist und dann nur auf klick das spieler kreuz setzen, sonst computerMove()
     
     fields.forEach((field) => {
         field.addEventListener("click", () => {
             //player turn
             const fieldNumber = parseInt(field.getAttribute("id"));
-                if (gameBoard.board[fieldNumber] === undefined && 
-                    gameBoard.checkForWin("X") !== "win" && 
-                    gameBoard.checkForWin("O") !== "win" &&
-                    gameBoard.checkForWin("X") !== "tie" && 
-                    gameBoard.checkForWin("O") !== "tie") {
+            if (gameBoard.board[fieldNumber] === undefined && 
+                gameBoard.checkForWin("X") !== "win" && 
+                gameBoard.checkForWin("O") !== "win" &&
+                gameBoard.checkForWin("X") !== "tie" && 
+                gameBoard.checkForWin("O") !== "tie") {
                     gameBoard.setToken(fieldNumber, player1.token); 
                     displayToken(field, player1);
-                };
-                if (gameBoard.checkForWin(player1.token)) { 
-                    displayEndOfGameMessage(player1);
-                }
-                gameController.increaseRoundCounter();
+            };
+            if (gameBoard.checkForWin(player1.token)) { 
+                displayEndOfGameMessage(player1);
+            }
+            gameController.increaseRoundCounter();
 
-                //computer turn
-                if (gameBoard.checkForWin("X") !== "win" && 
-                    gameBoard.checkForWin("O") !== "win" &&
-                    gameBoard.checkForWin("X") !== "tie" && 
-                    gameBoard.checkForWin("O") !== "tie") {
-                        computerMove(player2);
-                }
-                if (gameBoard.checkForWin(player2.token)) {
-                    displayEndOfGameMessage(player2);
-                }
-                gameController.increaseRoundCounter();            
+            //computer turn
+            if (gameBoard.checkForWin("X") !== "win" && 
+                gameBoard.checkForWin("O") !== "win" &&
+                gameBoard.checkForWin("X") !== "tie" && 
+                gameBoard.checkForWin("O") !== "tie") {
+                    computerMove(player2);
+            }
+            if (gameBoard.checkForWin(player2.token)) {
+                displayEndOfGameMessage(player2);
+            }
+            gameController.increaseRoundCounter();            
         });
     })
-
-            
-    
-
 })();
